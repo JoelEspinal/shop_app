@@ -9,6 +9,6 @@ class ProductsOverviewScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text('MyShop'),
         ),
-        body: ProductGrid(loadedProducts: null));
+        body: ProductGrid());
   }
 }
