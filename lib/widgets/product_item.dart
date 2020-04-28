@@ -15,9 +15,7 @@ class ProductItem extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
           ProductDetailScreen.routeName,
-          arguments: {
-            'id': id,
-          },
+          arguments: id,
         );
       },
       child: ClipRRect(
