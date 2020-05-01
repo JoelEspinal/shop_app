@@ -19,11 +19,13 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
           actions: <Widget>[
             PopupMenuButton(
                 onSelected: (FavoriteOption selectedValue) {
-                  if (selectedValue == FavoriteOption.Favorites) {
-                    _showOnlyFavorites = true;
-                  } else {
-                    _showOnlyFavorites = false;
-                  }
+                  setState(() {
+                    if (selectedValue == FavoriteOption.Favorites) {
+                      _showOnlyFavorites = true;
+                    } else {
+                      _showOnlyFavorites = false;
+                    }
+                  });
                 },
                 icon: Icon(Icons.more_vert),
                 itemBuilder: (_) => [
