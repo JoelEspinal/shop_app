@@ -19,11 +19,24 @@ class _EditProductScreenState extends State<EditProductScreen> {
   final _form = GlobalKey<FormState>();
   var _editedProduct =
       Product(id: null, title: '', price: 0.0, description: '', imageUrl: '');
+  var _isInit = true;
 
   @override
   void initState() {
     _imageUrlFocusNode.addListener(updateImageUrl);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      final productId = ModalRoute.of(context).settings.arguments as String;
+      _editedProduct =
+          Provider.of<Products>(context, listen: false).findById(productId);
+    }
+
+    _isInit = false;
+    super.didChangeDependencies();
   }
 
   @override
