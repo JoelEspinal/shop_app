@@ -47,7 +47,7 @@ class Products with ChangeNotifier {
   }
 
   Product findById(String id) {
-    return items.firstWhere((product) => product.id == id);
+    return items.firstWhere((product) => product.id == id, orElse: () => null);
   }
 
   void addroducts(Product product) {
@@ -61,5 +61,14 @@ class Products with ChangeNotifier {
 
     _items.add(newProduct);
     notifyListeners();
+  }
+
+  void updateProduct(String id, Product newProduct) {
+    final productIndex =
+        _items.indexWhere((product) => product.id == newProduct.id);
+    if (productIndex >= 0) {
+      _items[productIndex] = newProduct;
+      notifyListeners();
+    }
   }
 }
