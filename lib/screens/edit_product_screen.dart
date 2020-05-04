@@ -106,6 +106,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
               children: <Widget>[
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Title'),
+                  initialValue: _initValues['title'],
                   textInputAction: TextInputAction.next,
                   onFieldSubmitted: (_) {
                     FocusScope.of(context).requestFocus(_priceFocusNode);
@@ -128,6 +129,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Price'),
+                  initialValue: _initValues['price'],
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
                   focusNode: _priceFocusNode,
@@ -161,6 +163,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                 ),
                 TextFormField(
                   decoration: InputDecoration(labelText: 'Desciption'),
+                  initialValue: _initValues['description'],
                   maxLines: 3,
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.multiline,
@@ -208,6 +211,7 @@ class _EditProductScreenState extends State<EditProductScreen> {
                     Expanded(
                       child: TextFormField(
                         decoration: InputDecoration(labelText: 'Image URL'),
+                        initialValue: _initValues['imageUrl'],
                         keyboardType: TextInputType.url,
                         textInputAction: TextInputAction.done,
                         controller: _imageUrlController,
