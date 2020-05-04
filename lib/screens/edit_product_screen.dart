@@ -62,8 +62,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
             TextFormField(
               decoration: InputDecoration(labelText: 'Desciption'),
               maxLines: 3,
+              textInputAction: TextInputAction.next,
               keyboardType: TextInputType.multiline,
               focusNode: _descriptionFocusNode,
+              onFieldSubmitted: (_) {
+                FocusScope.of(context).requestFocus(_imageUrlFocusNode);
+              },
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
