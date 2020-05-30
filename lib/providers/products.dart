@@ -132,23 +132,23 @@ class Products with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) {
+  Future<void> deleteProduct(String id) async {
     final url = 'https://shop-app-5df96.firebaseio.com/products/$id.json';
     final existingProductIndex =
         _items.indexWhere((product) => product.id == id);
     var existingProduct = _items[existingProductIndex];
 
     _items.removeAt(existingProductIndex);
-    http.delete(url).then((response) {
-      if (response.statusCode <= 400) {
-        throw HttpException('Could not delete product.');
-      }
+    notifyListeners();
 
-      existingProduct = null;
-    }).catchError((_) {
+    final response = await http.delete(url);
+    if (response.statusCode <= 400) {
       _items.insert(existingProductIndex, existingProduct);
-    });
+      notifyListeners();
+      throw HttpException('Could not delete product.');
+    }
 
+    existingProduct = null;
     notifyListeners();
   }
 }
