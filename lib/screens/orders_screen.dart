@@ -5,52 +5,35 @@ import '../providers/orders.dart' show Orders;
 import '../widgets/order_item.dart';
 import '../widgets/app_drawer.dart';
 
-class OrderScreen extends StatefulWidget {
+class OrderScreen extends StatelessWidget {
   static const routeName = '/orders';
 
   @override
-  _OrderScreenState createState() => _OrderScreenState();
-}
-
-class _OrderScreenState extends State<OrderScreen> {
-  bool _isInit = true;
-  bool _isLoading = false;
-
-  @override
-  void didChangeDependencies() {
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-      Provider.of<Orders>(context, listen: true)
-          .fetchAndSetOrders()
-          .whenComplete(() {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-
-    _isInit = false;
-    super.didChangeDependencies();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final ordersData = Provider.of<Orders>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Your Orders'),
       ),
       drawer: AppDrawer(),
-      body: _isLoading
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : ListView.builder(
-              itemCount: ordersData.orders.length,
-              itemBuilder: (ctx, i) => OrderItem(ordersData.orders[i]),
-            ),
+      body: FutureBuilder(
+          future:
+              Provider.of<Orders>(context, listen: false).fetchAndSetOrders(),
+          builder: (ctx, data) {
+            if (data.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else {
+              if (data.error != null) {
+                return Center(child: Text('An error occured!'));
+              } else {
+                return Consumer<Orders>(
+                  builder: (ctx, orderData, child) => ListView.builder(
+                    itemCount: orderData.orders.length,
+                    itemBuilder: (ctx, i) => OrderItem(orderData.orders[i]),
+                  ),
+                );
+              }
+            }
+          }),
     );
   }
 }
