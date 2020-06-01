@@ -13,12 +13,12 @@ class OrderScreen extends StatefulWidget {
 }
 
 class _OrderScreenState extends State<OrderScreen> {
-  var _isInit = true;
+  bool _isInit = true;
 
   @override
   void didChangeDependencies() {
-    _if(_isInit) {
-      Provider.of(context, listen: true).fetchAndSetOrders();
+    if (_isInit) {
+      Provider.of<Orders>(context, listen: true).fetchAndSetOrders();
     }
 
     _isInit = false;
